@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class User {
+public class Usuario {
     @Id
     private int id;
     private String usuario;
