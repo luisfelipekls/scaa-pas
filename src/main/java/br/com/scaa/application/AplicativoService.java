@@ -31,4 +31,11 @@ public class AplicativoService {
     public void delete(Aplicativo aplicativo){
         aplicativoRepository.delete(aplicativo);
     }
+
+    public Aplicativo updateCustoMensal(Long id, double novoCustoMensal){
+        Aplicativo aplicativo = aplicativoRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Aplicativo não encontrado com o ID: " + id));
+        aplicativo.setCustoMensal(novoCustoMensal);
+        return aplicativoRepository.save(aplicativo);
+    }
 }
