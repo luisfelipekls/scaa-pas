@@ -1,9 +1,8 @@
-package br.com.scaa.domain;
+package br.com.scaa.infraestructure.persistence.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

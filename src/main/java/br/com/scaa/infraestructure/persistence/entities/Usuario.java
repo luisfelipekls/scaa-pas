@@ -1,4 +1,4 @@
-package br.com.scaa.domain;
+package br.com.scaa.infraestructure.persistence.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,10 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Aplicativo {
+public class Usuario {
     @Id
     private int id;
-    private Long codigo;
-    private String nome;
-    private double custoMensal;
+    private String usuario;
+    private String senha;
 }
