@@ -1,8 +1,6 @@
 package br.com.scaa.infraestructure.persistence.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Pagamento {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
     private double valorPago;
     private Date dataPagamento;
