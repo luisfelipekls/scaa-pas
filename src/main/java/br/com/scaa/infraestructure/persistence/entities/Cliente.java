@@ -1,4 +1,4 @@
-package br.com.scaa.domain;
+package br.com.scaa.infraestructure.persistence.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

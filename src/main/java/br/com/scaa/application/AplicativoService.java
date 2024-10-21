@@ -1,14 +1,16 @@
 package br.com.scaa.application;
 
-import br.com.scaa.domain.Aplicativo;
-import br.com.scaa.domain.interfaces.IAplicativoRepository;
+import br.com.scaa.infraestructure.persistence.entities.Aplicativo;
+import br.com.scaa.infraestructure.persistence.repository.IAplicativoJPARepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AplicativoService {
 
-    private final IAplicativoRepository aplicativoRepository;
-    public AplicativoService(IAplicativoRepository aplicativoRepository) {
+    private final IAplicativoJPARepository aplicativoRepository;
+    public AplicativoService(IAplicativoJPARepository aplicativoRepository) {
         this.aplicativoRepository = aplicativoRepository;
     }
 
