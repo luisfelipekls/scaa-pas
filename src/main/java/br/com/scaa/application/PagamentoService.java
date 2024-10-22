@@ -14,12 +14,10 @@ public class PagamentoService {
         this.pagamentoRepository = pagamentoRepository;
     }
 
-    public PagamentoModel save(Pagamento pagamento) {
-        PagamentoModel pag = Pagamento.toPagamentoModel(pagamento);
-
-        pag.validate();
-
-        PagamentoModel pagamentoRegistrado = Pagamento.toPagamentoModel(pagamentoRepository.save(pagamento));
-        return pagamentoRegistrado;
+    public PagamentoModel save(PagamentoModel pagamento) {
+        pagamento.validate();
+        return Pagamento.toPagamentoModel(
+                pagamentoRepository.save(Pagamento.fromPagamentoModel(pagamento))
+        );
     }
 }

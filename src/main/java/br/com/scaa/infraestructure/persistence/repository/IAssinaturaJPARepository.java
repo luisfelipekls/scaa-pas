@@ -12,4 +12,6 @@ public interface IAssinaturaJPARepository extends JpaRepository<Assinatura, Long
     List<Assinatura> findByClienteCodigo(Long codigoCliente);
 
     List<Assinatura> findByAplicativoCodigo(Long codigoAplicativo);
+
+    Assinatura findByCodigo(Long codigoAssinatura);
 }

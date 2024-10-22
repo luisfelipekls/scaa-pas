@@ -32,4 +32,22 @@ public class Assinatura {
         this.inicioVigencia = LocalDateTime.now();
         this.fimVigencia = LocalDateTime.now().plusDays(7);
     }
+
+    public static AssinaturaModel toAssinaturaModel(Assinatura assinatura) {
+        return new AssinaturaModel(
+                assinatura.getCodigo(),
+                assinatura.getInicioVigencia(),
+                assinatura.getFimVigencia(),
+                Aplicativo.toAplicativoModel(assinatura.getAplicativo()),
+                Cliente.toClienteModel(assinatura.getCliente()));
+        }
+
+    public static Assinatura fromAssinaturaModel(AssinaturaModel assinaturaModel) {
+        return new Assinatura(
+                Aplicativo.fromAplicativoModel(assinaturaModel.getAplicativo()),
+                Cliente.fromClienteModel(assinaturaModel.getCliente()));
+    }
 }
+
+
+

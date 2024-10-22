@@ -18,24 +18,24 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listAll(){
-        List<Cliente> clientes = clienteService.findAll();
+    public ResponseEntity<List<ClienteModel>> listAll(){
+        List<ClienteModel> clientes = clienteService.findAll();
         return ResponseEntity.ok(clientes);
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<Cliente> findByCodigo(@PathVariable Long codigo){
+    public ResponseEntity<ClienteModel> findByCodigo(@PathVariable Long codigo){
         return ResponseEntity.ok(clienteService.findByCodigo(codigo));
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody ClienteModel cliente){
+    public ResponseEntity<ClienteModel> save(@RequestBody ClienteModel cliente){
         Cliente cli = Cliente.fromClienteModel(cliente);
         return ResponseEntity.ok(clienteService.save(cli));
     }
 
     @PutMapping
-    public ResponseEntity<Cliente> update(@RequestBody Cliente cliente){
+    public ResponseEntity<ClienteModel> update(@RequestBody Cliente cliente){
         return ResponseEntity.ok(clienteService.update(cliente));
     }
 }

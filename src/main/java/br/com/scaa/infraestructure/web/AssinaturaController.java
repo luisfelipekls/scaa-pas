@@ -21,7 +21,7 @@ public class AssinaturaController {
     }
 
     @PostMapping
-    public ResponseEntity<Assinatura> cadastra(@RequestParam Long codigoAplicativo, @RequestParam Long codigoCliente){
+    public ResponseEntity<AssinaturaModel> cadastra(@RequestParam Long codigoAplicativo, @RequestParam Long codigoCliente){
         return ResponseEntity.ok(assinaturaService.save(codigoAplicativo, codigoCliente));
     }
 
@@ -31,12 +31,12 @@ public class AssinaturaController {
     }
 
     @GetMapping("/cliente")
-    public ResponseEntity<List<Assinatura>> listaAssinaturasPorCliente(@RequestParam Long codigoCliente){
+    public ResponseEntity<List<AssinaturaModel>> listaAssinaturasPorCliente(@RequestParam Long codigoCliente){
         return ResponseEntity.ok(assinaturaService.buscaAssinaturasPorCliente(codigoCliente));
     }
 
     @GetMapping("/aplicativo")
-    public ResponseEntity<List<Assinatura>> listaAssinaturasPorAplicativo(@RequestParam Long codigoAplicativo){
+    public ResponseEntity<List<AssinaturaModel>> listaAssinaturasPorAplicativo(@RequestParam Long codigoAplicativo){
         return ResponseEntity.ok(assinaturaService.buscaAssinaturasPorAplicativo(codigoAplicativo));
     }
 }
