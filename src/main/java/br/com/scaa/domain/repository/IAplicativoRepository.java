@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IAplicativoRepository {
     List<AplicativoModel> findAll();
-    AplicativoModel findById(Long id);
+    AplicativoModel findByCodigo(Long id);
     AplicativoModel save(AplicativoModel aplicativo);
     AplicativoModel update(AplicativoModel aplicativo);
     void delete(AplicativoModel aplicativo);

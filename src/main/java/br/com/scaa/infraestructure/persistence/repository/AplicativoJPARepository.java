@@ -16,8 +16,8 @@ public class AplicativoJPARepository implements IAplicativoRepository {
     }
 
     @Override
-    public AplicativoModel findById(Long id) {
-        Aplicativo aplicativo = aplicativoRepository.findById(id).orElse(null);
+    public AplicativoModel findByCodigo(Long codigo) {
+        Aplicativo aplicativo = aplicativoRepository.findByCodigo(codigo);
         return Aplicativo.toAplicativoModel(aplicativo);
     }
 
