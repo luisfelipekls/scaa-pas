@@ -1,6 +1,7 @@
 package br.com.scaa.infraestructure.web;
 
 import br.com.scaa.application.AplicativoService;
+import br.com.scaa.domain.AplicativoModel;
 import br.com.scaa.infraestructure.persistence.entities.Aplicativo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,16 @@ public class AplicativoController {
     @GetMapping("/{codigo}")
     public ResponseEntity<Aplicativo> findByCodigo(@PathVariable Long codigo){
         return ResponseEntity.ok(aplicativoService.findByCodigo(codigo));
+    }
+
+    @PostMapping
+    public ResponseEntity<Aplicativo> save(@RequestBody AplicativoModel aplicativo){
+        Aplicativo app = Aplicativo.fromAplicativoModel(aplicativo);
+        return ResponseEntity.ok(aplicativoService.save(app));
+    }
+
+    @PutMapping
+    public ResponseEntity<Aplicativo> update(@RequestBody Aplicativo aplicativo){
+        return ResponseEntity.ok(aplicativoService.update(aplicativo));
     }
 }
