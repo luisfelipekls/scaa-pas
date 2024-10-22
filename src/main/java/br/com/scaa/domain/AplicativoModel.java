@@ -1,28 +1,21 @@
 package br.com.scaa.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AplicativoModel {
     private Long codigo;
     private String nome;
     private double custoMensal;
 
-    public AplicativoModel(long codigo, String nome, double custoMensal) {
-        this.codigo = codigo;
+    public AplicativoModel(String nome, double custoMensal) {
         this.nome = nome;
-        this.custoMensal = custoMensal;
-    }
-    public long getCodigo() {
-        return codigo;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public double getCustoMensal() {
-        return custoMensal;
-    }
-
-    public void setCustoMensal(double custoMensal) {
         this.custoMensal = custoMensal;
     }
 }
