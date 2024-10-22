@@ -18,8 +18,8 @@ public class AplicativoService {
         return aplicativoRepository.findAll();
     }
 
-    public Aplicativo findById(Long id){
-        return aplicativoRepository.findById(id).get();
+    public Aplicativo findByCodigo(Long codigo){
+        return aplicativoRepository.findByCodigo(codigo);
     }
 
     public Aplicativo save(Aplicativo aplicativo){
