@@ -13,6 +13,10 @@ import java.util.List;
 public class AssinaturaJPARespository implements IAssinaturaRepository {
     private IAssinaturaJPARepository assinaturaRepository;
 
+    public AssinaturaJPARespository(IAssinaturaJPARepository assinaturaRepository) {
+        this.assinaturaRepository = assinaturaRepository;
+    }
+
     @Override
     public AssinaturaModel save(AssinaturaModel assinatura) {
         Assinatura assin = Assinatura.fromAssinaturaModel(assinatura);

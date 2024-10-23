@@ -17,9 +17,9 @@ public class PagamentoModel {
     private Double valorPago;
     private String dataPagamento;
     private String promocao;
+    private long assinaturaId;
 
     public void validate() {
-
         if (valorPago == null || valorPago <= 0) {
             throw new IllegalArgumentException("Valor inválido: Valor a ser pago não pode ser nulo e deve ser maior que zero");
         }

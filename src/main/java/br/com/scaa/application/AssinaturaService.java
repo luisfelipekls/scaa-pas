@@ -44,4 +44,19 @@ public class AssinaturaService {
     public List<AssinaturaModel> buscaAssinaturasPorAplicativo(Long codigoAplicativo) {
         return assinaturaRepository.findByCodigoAplicativo(codigoAplicativo);
     }
+
+    public AssinaturaModel findByCodigo(Long codigo) {
+        return assinaturaRepository.findByCodigo(codigo);
+    }
+
+    public void renovaAssinatura(Long codigo) {
+        AssinaturaModel assinaturaModel = assinaturaRepository.findByCodigo(codigo);
+        assinaturaModel.setInicioVigencia(LocalDateTime.now());
+        if(LocalDateTime.now().isBefore(assinaturaModel.getFimVigencia())) {
+            assinaturaModel.setFimVigencia(assinaturaModel.getFimVigencia().plusDays(30));
+        }else{
+            assinaturaModel.setFimVigencia(LocalDateTime.now().plusDays(30));
+        }
+        assinaturaRepository.save(assinaturaModel);
+    }
 }
