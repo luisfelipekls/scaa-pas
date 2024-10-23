@@ -23,9 +23,7 @@ public class PagamentoController {
     @PostMapping("/registrarPagamento")
     public ResponseEntity<Object> registrarPagamento(@RequestBody PagamentoModel pagamentoBody){
         try{
-            Pagamento pag = Pagamento.fromPagamentoModel(pagamentoBody);
-            PagamentoModel pagamento = pagamentoService.save(pag);
-            return ResponseEntity.status(HttpStatus.CREATED).body(pagamento);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoService.save(pagamentoBody));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

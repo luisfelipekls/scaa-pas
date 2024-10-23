@@ -18,24 +18,24 @@ public class AplicativoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Aplicativo>> listAll(){
-        List<Aplicativo> aplicativos = aplicativoService.findAll();
+    public ResponseEntity<List<AplicativoModel>> listAll(){
+        List<AplicativoModel> aplicativos = aplicativoService.findAll();
         return ResponseEntity.ok(aplicativos);
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<Aplicativo> findByCodigo(@PathVariable Long codigo){
+    public ResponseEntity<AplicativoModel> findByCodigo(@PathVariable Long codigo){
         return ResponseEntity.ok(aplicativoService.findByCodigo(codigo));
     }
 
     @PostMapping
-    public ResponseEntity<Aplicativo> save(@RequestBody AplicativoModel aplicativo){
+    public ResponseEntity<AplicativoModel> save(@RequestBody AplicativoModel aplicativo){
         Aplicativo app = Aplicativo.fromAplicativoModel(aplicativo);
         return ResponseEntity.ok(aplicativoService.save(app));
     }
 
     @PutMapping
-    public ResponseEntity<Aplicativo> update(@RequestBody Aplicativo aplicativo){
+    public ResponseEntity<AplicativoModel> update(@RequestBody Aplicativo aplicativo){
         return ResponseEntity.ok(aplicativoService.update(aplicativo));
     }
 }

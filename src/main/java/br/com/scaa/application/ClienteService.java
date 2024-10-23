@@ -1,5 +1,6 @@
 package br.com.scaa.application;
 
+import br.com.scaa.domain.ClienteModel;
 import br.com.scaa.infraestructure.persistence.entities.Cliente;
 import br.com.scaa.infraestructure.persistence.repository.IClienteJPARepository;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,14 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<Cliente> findAll(){ return clienteRepository.findAll();}
+    public List<ClienteModel> findAll(){ return clienteRepository.findAll().stream().map(
+            Cliente::toClienteModel).toList();
+    }
 
-    public Cliente findByCodigo(Long codigo){ return clienteRepository.findByCodigo(codigo);}
+    public ClienteModel findByCodigo(Long codigo){ return Cliente.toClienteModel(clienteRepository.findByCodigo(codigo));}
 
-    public Cliente save(Cliente cliente){ return clienteRepository.save(cliente);}
+    public ClienteModel save(Cliente cliente){ return Cliente.toClienteModel(clienteRepository.save(cliente));}
 
-    public Cliente update(Cliente cliente){ return clienteRepository.save(cliente);}
+    public ClienteModel update(Cliente cliente){ return Cliente.toClienteModel(clienteRepository.save(cliente));}
 
-    public void delete(Cliente cliente){ clienteRepository.delete(cliente);}
 }
