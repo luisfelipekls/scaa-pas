@@ -33,6 +33,14 @@ public class Assinatura {
         this.fimVigencia = LocalDateTime.now().plusDays(7);
     }
 
+    public Assinatura(Long codigo, Aplicativo aplicativo, Cliente cliente) {
+        this.codigo = codigo;
+        this.aplicativo = aplicativo;
+        this.cliente = cliente;
+        this.inicioVigencia = LocalDateTime.now();
+        this.fimVigencia = LocalDateTime.now().plusDays(7);
+    }
+
     public static AssinaturaModel toAssinaturaModel(Assinatura assinatura) {
         return new AssinaturaModel(
                 assinatura.getCodigo(),
@@ -44,6 +52,13 @@ public class Assinatura {
 
     public static Assinatura fromAssinaturaModel(AssinaturaModel assinaturaModel) {
         return new Assinatura(
+                Aplicativo.fromAplicativoModel(assinaturaModel.getAplicativo()),
+                Cliente.fromClienteModel(assinaturaModel.getCliente()));
+    }
+
+    public static Assinatura fromAssinaturaModelToCreate(AssinaturaModel assinaturaModel) {
+        return new Assinatura(
+                assinaturaModel.getCodigo(),
                 Aplicativo.fromAplicativoModel(assinaturaModel.getAplicativo()),
                 Cliente.fromClienteModel(assinaturaModel.getCliente()));
     }
