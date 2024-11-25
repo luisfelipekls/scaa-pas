@@ -5,33 +5,55 @@ import br.com.scaa.domain.PagamentoModel;
 import br.com.scaa.domain.repository.IPagamentoRepository;
 import br.com.scaa.infraestructure.persistence.entities.Pagamento;
 import br.com.scaa.infraestructure.persistence.repository.IPagamentoJPARepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
 public class PagamentoService {
-    private IPagamentoJPARepository pagamentoRepository;
-    private AssinaturaService assinaturaService;
 
-    public PagamentoService(IPagamentoJPARepository pagamentoRepository, AssinaturaService assinaturaService) {
+    private final IPagamentoJPARepository pagamentoRepository;
+    private final AssinaturaService assinaturaService;
+    private final RabbitTemplate rabbitTemplate;
+
+    public PagamentoService(IPagamentoJPARepository pagamentoRepository,
+                            AssinaturaService assinaturaService,
+                            RabbitTemplate rabbitTemplate) {
         this.pagamentoRepository = pagamentoRepository;
         this.assinaturaService = assinaturaService;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
+    @Transactional // Garante atomicidade
     public LocalDateTime save(PagamentoModel pagamento) {
+        // Validações do pagamento
         pagamento.validate();
-        AssinaturaModel assinaturaModel = assinaturaService.findByCodigo(pagamento.getAssinaturaId());
-        if(assinaturaModel == null){
-            throw new RuntimeException("Assinatura não encontrada");
+
+        // Busca a assinatura associada
+        AssinaturaModel assinaturaModel = assinaturaService.findByCodigo(pagamento.getAssinaturaCodigo());
+        if (assinaturaModel == null) {
+            throw new AssinaturaNotFoundException("Assinatura não encontrada");
         }
-        if(assinaturaModel.getAplicativo().getCustoMensal() != pagamento.getValorPago()){
-            throw new RuntimeException("Valor do pagamento não corresponde ao valor da assinatura");
+
+        // Verifica se o valor pago é correto
+        if (assinaturaModel.getAplicativo().getCustoMensal() != pagamento.getValorPago()) {
+            throw new InvalidPaymentException("Valor do pagamento não corresponde ao valor da assinatura");
         }
-        PagamentoModel pagamentoRealizado =  Pagamento.toPagamentoModel(
-                pagamentoRepository.save(Pagamento.fromPagamentoModel(pagamento))
-        );
-        assinaturaService.renovaAssinatura(pagamentoRealizado.getAssinaturaId());
+
+        // Associa assinatura ao pagamento e salva no repositório
+        pagamento.setAssinatura(assinaturaModel);
+        Pagamento entidadePagamento = Pagamento.fromPagamentoModel(pagamento);
+        Pagamento pagamentoSalvo = pagamentoRepository.save(entidadePagamento);
+
+        // Renova a assinatura associada
+        assinaturaService.renovaAssinatura(pagamentoSalvo.getAssinatura().getCodigo());
+
+        // Publica evento no RabbitMQ
+        rabbitTemplate.convertAndSend("assinatura-exchange", "pagamento-key", pagamentoSalvo);
+
+        // Retorna a nova data de fim da vigência
         return assinaturaModel.getFimVigencia();
     }
 }

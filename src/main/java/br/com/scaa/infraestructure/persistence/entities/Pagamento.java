@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,21 +19,18 @@ public class Pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
     private double valorPago;
-    private Date dataPagamento;
+    private LocalDateTime dataPagamento;
     private String promocao;
     @ManyToOne
     private Assinatura assinatura;
 
-    public static Pagamento fromPagamentoModel(br.com.scaa.domain.PagamentoModel pagamento) {
+    public static Pagamento fromPagamentoModel(PagamentoModel pagamento) {
         Pagamento pag = new Pagamento();
         pag.setCodigo(pagamento.getCodigo());
         pag.setValorPago(pagamento.getValorPago());
-
-
-        Date datePagamento = new Date(pagamento.getDataPagamento());
-        pag.setDataPagamento(datePagamento);
-
+        pag.setDataPagamento(pagamento.getDataPagamento());
         pag.setPromocao(pagamento.getPromocao());
+        pag.setAssinatura(Assinatura.fromAssinaturaModelToCreate(pagamento.getAssinatura()));
         return pag;
     }
 
@@ -41,7 +38,7 @@ public class Pagamento {
         PagamentoModel pag = new PagamentoModel();
         pag.setCodigo(pagamento.getCodigo());
         pag.setValorPago(pagamento.getValorPago());
-        pag.setDataPagamento(pagamento.getDataPagamento().toString());
+        pag.setDataPagamento(pagamento.getDataPagamento());
         pag.setPromocao(pagamento.getPromocao());
         return pag;
     }
