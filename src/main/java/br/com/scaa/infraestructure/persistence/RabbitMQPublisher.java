@@ -1,4 +1,4 @@
-package br.com.scaa.infrastructure.messaging;
+package br.com.scaa.infraestructure.persistence;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;

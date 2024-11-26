@@ -1,11 +1,12 @@
-package br.com.scaa.infrastructure.persistence.repository;
+package br.com.scaa.infraestructure.persistence.repository;
 
 import br.com.scaa.domain.AssinaturaModel;
 import br.com.scaa.domain.repository.IAssinaturaRepository;
-import br.com.scaa.infrastructure.messaging.RabbitMQPublisher;
-import br.com.scaa.infrastructure.persistence.entities.Assinatura;
+import br.com.scaa.infraestructure.persistence.RabbitMQPublisher;
+import br.com.scaa.infraestructure.persistence.entities.Assinatura;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,7 +30,7 @@ public class AssinaturaJPARepository implements IAssinaturaRepository {
             String.format("Assinatura %d foi atualizada.", savedEntity.getCodigo())
         );
 
-        return savedEntity.toAssinaturaModel();
+        return Assinatura.toAssinaturaModel(savedEntity);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class AssinaturaJPARepository implements IAssinaturaRepository {
 
     @Override
     public List<AssinaturaModel> findByCodigoCliente(Long codigoCliente) {
-        return jpaRepository.findByCodigoCliente(codigoCliente)
+        return jpaRepository.findByClienteCodigo(codigoCliente)
                 .stream()
                 .map(Assinatura::toAssinaturaModel)
                 .toList();
@@ -48,7 +49,7 @@ public class AssinaturaJPARepository implements IAssinaturaRepository {
 
     @Override
     public List<AssinaturaModel> findByCodigoAplicativo(Long codigoAplicativo) {
-        return jpaRepository.findByCodigoAplicativo(codigoAplicativo)
+        return jpaRepository.findByAplicativoCodigo(codigoAplicativo)
                 .stream()
                 .map(Assinatura::toAssinaturaModel)
                 .toList();

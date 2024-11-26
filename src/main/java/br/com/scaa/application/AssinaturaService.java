@@ -1,17 +1,19 @@
 package br.com.scaa.application;
 
 import br.com.scaa.domain.AplicativoModel;
+import br.com.scaa.domain.AssinaturaCacheModel;
 import br.com.scaa.domain.AssinaturaModel;
 import br.com.scaa.domain.ClienteModel;
 import br.com.scaa.domain.repository.IAssinaturaRepository;
-import br.com.scaa.asscache.model.AssinaturaCacheModel; // Classe do AssCache
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Service
 public class AssinaturaService {

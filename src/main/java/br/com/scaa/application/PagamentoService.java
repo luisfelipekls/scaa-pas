@@ -27,19 +27,19 @@ public class PagamentoService {
     }
 
     @Transactional // Garante atomicidade
-    public LocalDateTime save(PagamentoModel pagamento) {
+    public LocalDateTime save(PagamentoModel pagamento) throws Exception {
         // Validações do pagamento
         pagamento.validate();
 
         // Busca a assinatura associada
         AssinaturaModel assinaturaModel = assinaturaService.findByCodigo(pagamento.getAssinaturaCodigo());
         if (assinaturaModel == null) {
-            throw new AssinaturaNotFoundException("Assinatura não encontrada");
+            throw new Exception("Assinatura não encontrada");
         }
 
         // Verifica se o valor pago é correto
         if (assinaturaModel.getAplicativo().getCustoMensal() != pagamento.getValorPago()) {
-            throw new InvalidPaymentException("Valor do pagamento não corresponde ao valor da assinatura");
+            throw new Exception("Valor do pagamento não corresponde ao valor da assinatura");
         }
 
         // Associa assinatura ao pagamento e salva no repositório
